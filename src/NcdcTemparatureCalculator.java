@@ -1,5 +1,6 @@
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
@@ -15,27 +16,34 @@ public class NcdcTemparatureCalculator {
 
     public static void main(String[] args) throws IOException {
         FileSystem fileSystem = FileSystem.get(new Configuration());
-        Path path = new Path(args[0]);
-        FSDataInputStream inputStream = fileSystem.open(path);
+        FSDataInputStream inputStream = fileSystem.open(new Path(args[0]));
+        Path outputPath = new Path(args[1]);
+        if (fileSystem.exists(outputPath)) {
+            System.out.println("Output path " + args[1] + " already exists.");
+            System.exit(-1);
+        }
         int numRecords = 5;
         for (int i=0; i<numRecords; i++) {
             String record = readRecord(inputStream);
             processRecord(record);
         }
-        findAverageTemparature();
+        updateAverageTemparature(fileSystem, outputPath);
         inputStream.close();
         fileSystem.close();
     }
 
-    private static void findAverageTemparature() {
+    private static void updateAverageTemparature(FileSystem fileSystem, Path outputPath) throws IOException {
+        FSDataOutputStream fsDataOutputStream = fileSystem.create(outputPath);
         for (String year : temparaturesByYear.keySet()) {
             List<Integer> temps = temparaturesByYear.get(year);
             int sum = 0;
             for (Integer temp : temps) {
                 sum += temp.intValue();
             }
-            System.out.println(year + ": " + sum/temps.size());
+            String record = String.format("%s,%d\n", year, sum / temps.size());
+            fsDataOutputStream.write(record.getBytes());
         }
+        fsDataOutputStream.close();
     }
 
     private static void processRecord(String record) {
