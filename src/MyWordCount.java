@@ -17,6 +17,9 @@ public class MyWordCount {
         Job wordCountJob = new Job(conf, "MyWordCount");
         wordCountJob.setJarByClass(MyWordCount.class);
         wordCountJob.setMapperClass(WCMapper.class);
+        if (args.length > 2) {
+            wordCountJob.setCombinerClass(WCReducer.class);
+        }
         wordCountJob.setReducerClass(WCReducer.class);
         wordCountJob.setOutputKeyClass(Text.class);
         wordCountJob.setOutputValueClass(IntWritable.class);
