@@ -25,6 +25,7 @@ public class MyWordCount {
         wordCountJob.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(wordCountJob, new Path(args[0]));
         FileOutputFormat.setOutputPath(wordCountJob, new Path(args[1]));
+        wordCountJob.setNumReduceTasks(2);
         wordCountJob.waitForCompletion(true);
     }
 }
