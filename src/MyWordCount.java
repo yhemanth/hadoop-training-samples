@@ -20,6 +20,7 @@ public class MyWordCount {
         if (args.length > 2) {
             wordCountJob.setCombinerClass(WCReducer.class);
         }
+        wordCountJob.setPartitionerClass(LexicalPartitioner.class);
         wordCountJob.setReducerClass(WCReducer.class);
         wordCountJob.setOutputKeyClass(Text.class);
         wordCountJob.setOutputValueClass(IntWritable.class);
