@@ -12,31 +12,6 @@ import java.io.IOException;
 
 public class MyWordCount {
 
-    public static class WCMapper extends Mapper<Object, Text, Text, IntWritable> {
-        @Override
-        public void map(Object key, Text text, Context context)
-                throws IOException, InterruptedException {
-            String line = text.toString();
-            String[] words = line.split(" ");
-            for (String word : words) {
-                context.write(new Text(word), new IntWritable(1));
-            }
-        }
-    }
-
-    public static class WCReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-        @Override
-        public void reduce(Text word, Iterable<IntWritable> counts, Context context)
-                throws IOException, InterruptedException {
-            int wordCount = 0;
-            for (IntWritable count : counts) {
-                wordCount += count.get();
-            }
-            context.write(word, new IntWritable(wordCount));
-        }
-    }
-
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         Job wordCountJob = new Job(conf, "MyWordCount");
