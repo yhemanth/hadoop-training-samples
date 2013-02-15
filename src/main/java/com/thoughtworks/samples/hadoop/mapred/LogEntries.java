@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop;
+package com.thoughtworks.samples.hadoop.mapred;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -7,7 +7,6 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Writable;
 
-import java.awt.peer.LightweightPeer;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;

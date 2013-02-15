@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop;
+package com.thoughtworks.samples.hadoop.mapred;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;

@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop;
+package com.thoughtworks.samples.hadoop.mapred;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
