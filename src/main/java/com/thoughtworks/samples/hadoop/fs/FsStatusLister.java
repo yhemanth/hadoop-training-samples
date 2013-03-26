@@ -20,7 +20,7 @@ public class FsStatusLister {
         }
         for (FileStatus status : fileStatuses) {
             String type = status.isDir() ? "Directory" : "File";
-            System.out.println(String.format("%s %s %.2fKb %d", status.getPath().getName(), type, status.getLen()/1024.0,
+            System.out.println(String.format("%s %s %.2fKb %d", status.getPath().getName(), type, status.getLen() / 1024.0,
                     status.getReplication()));
         }
     }

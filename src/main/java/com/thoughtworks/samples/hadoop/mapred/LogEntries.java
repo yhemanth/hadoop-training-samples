@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogEntries implements Writable{
+public class LogEntries implements Writable {
 
     List<LogEntry> logentries = new ArrayList<LogEntry>();
 
@@ -37,7 +37,7 @@ public class LogEntries implements Writable{
     public void readFields(DataInput dataInput) throws IOException {
         logentries.clear();
         int size = dataInput.readInt();
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             LogEntry logEntry = new LogEntry();
             logEntry.readFields(dataInput);
             logentries.add(logEntry);

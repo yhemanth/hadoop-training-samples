@@ -25,7 +25,7 @@ public class NcdcTemparatureCalculator {
             System.exit(-1);
         }
         int numRecords = 5;
-        for (int i=0; i<numRecords; i++) {
+        for (int i = 0; i < numRecords; i++) {
             String record = readRecord(inputStream);
             processRecord(record);
         }
@@ -69,7 +69,7 @@ public class NcdcTemparatureCalculator {
         int bytesRead = 0;
         bytesRead = inputStream.read(record, 0, recordLen);
         while (bytesRead < recordLen) {
-            bytesRead = inputStream.read(record, bytesRead, recordLen-bytesRead);
+            bytesRead = inputStream.read(record, bytesRead, recordLen - bytesRead);
         }
         return new String(record);
     }
