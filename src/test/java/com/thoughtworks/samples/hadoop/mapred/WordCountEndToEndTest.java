@@ -20,9 +20,9 @@ public class WordCountEndToEndTest {
         MapReduceDriver<Object, Text, Text, IntWritable, Text, IntWritable> mapReduceDriver
                 = MapReduceDriver.newMapReduceDriver(wcMapper, wcReducer);
 
-        mapReduceDriver.withInput(new LongWritable(0), new Text("Word1 Word2 Word2 Word1"));
-        mapReduceDriver.withOutput(new Text("Word1"), new IntWritable(2));
-        mapReduceDriver.withOutput(new Text("Word2"), new IntWritable(2));
+        mapReduceDriver.withInput(new LongWritable(0), new Text("word1 word2 Word2 Word1"));
+        mapReduceDriver.withOutput(new Text("word1"), new IntWritable(2));
+        mapReduceDriver.withOutput(new Text("word2"), new IntWritable(2));
 
         mapReduceDriver.runTest();
     }
