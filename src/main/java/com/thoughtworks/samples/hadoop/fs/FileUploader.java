@@ -59,7 +59,9 @@ public class FileUploader extends Configured implements Tool {
         byte[] inputBuffer = new byte[BUFFER_SIZE];
         while (bytesRemaining > 0 && bytesRead != -1) {
             bytesRead = srcStream.read(inputBuffer, 0, bytesToRead(bytesRemaining, inputBuffer));
-            destStream.write(inputBuffer, 0, bytesRead);
+            if (bytesRead > 0) {
+                destStream.write(inputBuffer, 0, bytesRead);
+            }
             bytesRemaining -= bytesRead;
         }
     }
