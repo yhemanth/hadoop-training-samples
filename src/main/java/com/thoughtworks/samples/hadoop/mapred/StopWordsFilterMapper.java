@@ -8,6 +8,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,13 +19,14 @@ import java.util.Set;
 public class StopWordsFilterMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     private Set<String> stopWords = new HashSet<String>();
+    private static Logger logger = Logger.getLogger(StopWordsFilterMapper.class.getName());
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
         Configuration configuration = context.getConfiguration();
         Path[] localCacheFiles = DistributedCache.getLocalCacheFiles(configuration);
         Path stopWordsFile = localCacheFiles[0];
-        System.out.println("Loading stop words from file: " + stopWordsFile.getName());
+        logger.info("Loading stop words from file: " + stopWordsFile.getName());
         FSDataInputStream inputStream = FileSystem.getLocal(configuration).open(stopWordsFile);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String word = bufferedReader.readLine();
@@ -33,7 +35,7 @@ public class StopWordsFilterMapper extends Mapper<Object, Text, Text, IntWritabl
             word = bufferedReader.readLine();
         }
         bufferedReader.close();
-        System.out.println(String.format("Loaded %d stop words from line %s",
+        logger.info(String.format("Loaded %d stop words from line %s",
                 stopWords.size(), stopWordsFile.getName()));
     }
 
