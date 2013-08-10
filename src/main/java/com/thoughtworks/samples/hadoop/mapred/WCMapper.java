@@ -23,6 +23,8 @@ public class WCMapper extends Mapper<Object, Text, Text, IntWritable> {
             if (wordMatcher.matches()) {
                 String word = wordMatcher.group(1);
                 context.write(new Text(word), new IntWritable(1));
+            } else {
+                context.getCounter(SKIPPED_WORDS.MISMATCHED_WORD).increment(1);
             }
         }
     }
