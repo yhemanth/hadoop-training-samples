@@ -1,5 +1,6 @@
-package com.thoughtworks.samples.hadoop.mapred;
+package com.thoughtworks.samples.hadoop.mapred.wordcount;
 
+import com.thoughtworks.samples.hadoop.mapred.wordcount.WCReducer;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;

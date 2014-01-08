@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop.mapred;
+package com.thoughtworks.samples.hadoop.mapred.failures;
 
 import org.apache.hadoop.mapreduce.Mapper;
 

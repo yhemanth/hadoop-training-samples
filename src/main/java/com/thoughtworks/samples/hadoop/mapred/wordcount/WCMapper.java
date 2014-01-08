@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop.mapred;
+package com.thoughtworks.samples.hadoop.mapred.wordcount;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;

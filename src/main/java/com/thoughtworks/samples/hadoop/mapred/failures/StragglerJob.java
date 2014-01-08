@@ -1,5 +1,6 @@
-package com.thoughtworks.samples.hadoop.mapred;
+package com.thoughtworks.samples.hadoop.mapred.failures;
 
+import com.thoughtworks.samples.hadoop.mapred.wordcount.WCReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;

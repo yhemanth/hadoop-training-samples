@@ -1,14 +1,12 @@
-package com.thoughtworks.samples.hadoop.mapred;
+package com.thoughtworks.samples.hadoop.mapred.wordcount;
 
+import com.thoughtworks.samples.hadoop.mapred.wordcount.WCMapper;
+import com.thoughtworks.samples.hadoop.mapred.wordcount.WCReducer;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
-import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 public class WordCountEndToEndTest {
 
