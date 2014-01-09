@@ -26,7 +26,9 @@ public class MyWordCount extends Configured implements Tool {
         if (conf.getBoolean("wordcount.runcombiner", false)) {
             wordCountJob.setCombinerClass(WCReducer.class);
         }
-        wordCountJob.setPartitionerClass(LexicalPartitioner.class);
+        if (conf.getBoolean("wordcount.partitioner.lexical", true)) {
+            wordCountJob.setPartitionerClass(LexicalPartitioner.class);
+        }
         wordCountJob.setReducerClass(WCReducer.class);
         wordCountJob.setOutputKeyClass(Text.class);
         wordCountJob.setOutputValueClass(IntWritable.class);
