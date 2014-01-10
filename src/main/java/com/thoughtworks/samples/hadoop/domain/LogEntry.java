@@ -1,12 +1,5 @@
 package com.thoughtworks.samples.hadoop.domain;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.VIntWritable;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;
@@ -17,79 +10,58 @@ public class LogEntry implements Writable {
 
     private String date;
     private String time;
-    private String httpMethod;
-    private String query;
-    private String clientIp;
-    private int httpStatus;
-    private int timeTaken;
-
-    public LogEntry(String date, String time, String httpMethod, String query, String clientIp,
-                    int httpStatus, int timeTaken) {
-
-        this.date = date;
-        this.time = time;
-        this.httpMethod = httpMethod;
-        this.query = query;
-        this.clientIp = clientIp;
-        this.httpStatus = httpStatus;
-        this.timeTaken = timeTaken;
-    }
+    private HttpRequest request;
 
     public LogEntry() {
 
     }
 
+    public LogEntry(String date, String time, HttpRequest request) {
+        this.date = date;
+        this.time = time;
+        this.request = request;
+    }
+
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-        new Text(date).write(dataOutput);
-        new Text(time).write(dataOutput);
-        new Text(httpMethod.toLowerCase()).write(dataOutput);
-        new Text(query.toLowerCase()).write(dataOutput);
-        new Text(clientIp).write(dataOutput);
-        new VIntWritable(httpStatus).write(dataOutput);
-        new VIntWritable(timeTaken).write(dataOutput);
+        dataOutput.writeUTF(date);
+        dataOutput.writeUTF(time);
+        request.write(dataOutput);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-        date = readString(dataInput);
-        time = readString(dataInput);
-        httpMethod = readString(dataInput);
-        query = readString(dataInput);
-        clientIp = readString(dataInput);
-        httpStatus = readVInt(dataInput);
-        timeTaken = readVInt(dataInput);
+        date = dataInput.readUTF();
+        time = dataInput.readUTF();
+        request = new HttpRequest();
+        request.readFields(dataInput);
     }
 
-    private int readVInt(DataInput dataInput) throws IOException {
-        VIntWritable vIntWritable = new VIntWritable();
-        vIntWritable.readFields(dataInput);
-        return vIntWritable.get();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LogEntry logEntry = (LogEntry) o;
+
+        if (!date.equals(logEntry.date)) return false;
+        if (!request.equals(logEntry.request)) return false;
+        if (!time.equals(logEntry.time)) return false;
+
+        return true;
     }
 
-    private String readString(DataInput dataInput) throws IOException {
-        Text text = new Text();
-        text.readFields(dataInput);
-        return text.toString();
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + time.hashCode();
+        result = 31 * result + request.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%d,%d", date, time, httpMethod, query, clientIp, httpStatus, timeTaken);
+        return String.format("%s,%s,%s", date, time, request.toString());
     }
 
-    public static void main(String[] args) throws IOException {
-        LogEntry logEntry = new LogEntry("2012-01-01", "11:00", "POST", "/JourneyPlanningService/Booking.svc",
-                "10.1.1.1", 200, 120);
-        FileSystem fileSystem = FileSystem.get(new Configuration());
-        Path path = new Path(args[0]);
-        FSDataOutputStream outStream = fileSystem.create(path);
-        logEntry.write(outStream);
-        outStream.close();
-        FSDataInputStream inputStream = fileSystem.open(path);
-        LogEntry logEntry1 = new LogEntry();
-        logEntry1.readFields(inputStream);
-        System.out.println(logEntry);
-        System.out.println(logEntry1);
-    }
 }

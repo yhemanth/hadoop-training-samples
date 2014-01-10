@@ -55,12 +55,10 @@ public class LogEntries implements Writable {
 
     public static void main(String[] args) throws IOException {
         List<LogEntry> entries = new ArrayList<LogEntry>();
-        entries.add(new LogEntry("2012-01-01", "11:00", "POST", "/JourneyPlanningService/Booking.svc",
-                "10.1.1.1", 200, 120));
-        entries.add(new LogEntry("2012-01-01", "11:01", "POST", "/JourneyPlanningService/JourneyPlanning.svc",
-                "10.1.1.1", 200, 90));
-        entries.add(new LogEntry("2012-01-01", "11:01", "POST", "/JourneyPlanningService/JourneyPlanning.svc",
-                "10.1.1.1", 200, 40));
+        entries.add(new LogEntry("29/Apr/2013", "10:20:28",
+                new HttpRequest("GET", "/static/js/Source/jHue/jquery.notify.js")));
+        entries.add(new LogEntry("29/Apr/2013", "10:35:31",
+                new HttpRequest("GET", "/debug/check_config_ajax")));
         LogEntries logEntries = new LogEntries(entries);
         FileSystem fileSystem = FileSystem.get(new Configuration());
         Path path = new Path(args[0]);
