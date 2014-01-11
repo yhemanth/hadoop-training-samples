@@ -1,12 +1,12 @@
 package com.thoughtworks.samples.hadoop.domain;
 
-import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class HttpRequest implements Writable {
+public class HttpRequest implements WritableComparable {
     private String httpMethod;
     private String url;
 
@@ -53,7 +53,18 @@ public class HttpRequest implements Writable {
 
     @Override
     public String toString() {
-        return String.format("%d,%d", httpMethod,url);
+        return String.format("%s,%s", httpMethod,url);
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if (equals(o)) return 0;
+        if ((o==null) || (o.getClass() != getClass())) return 1;
+        HttpRequest otherRequest = (HttpRequest) o;
+        if (url.equals(otherRequest.url)) {
+            return httpMethod.compareTo(otherRequest.httpMethod);
+        } else {
+            return url.compareTo(otherRequest.url);
+        }
+    }
 }

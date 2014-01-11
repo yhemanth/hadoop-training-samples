@@ -12,6 +12,18 @@ public class LogEntry implements Writable {
     private String time;
     private HttpRequest request;
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public HttpRequest getRequest() {
+        return request;
+    }
+
     public LogEntry() {
 
     }
