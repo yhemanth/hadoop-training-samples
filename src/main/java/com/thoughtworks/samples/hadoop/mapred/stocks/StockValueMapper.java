@@ -9,7 +9,7 @@ public class StockValueMapper extends Mapper<Object,Text,Text,Text> {
     @Override
     protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         String nasdaq_stock_line = value.toString();
-        String[] fields = nasdaq_stock_line.split(",", 3);
+        String[] fields = nasdaq_stock_line.split(",");
         context.write(new Text(fields[1]), new Text(nasdaq_stock_line));
     }
 }
