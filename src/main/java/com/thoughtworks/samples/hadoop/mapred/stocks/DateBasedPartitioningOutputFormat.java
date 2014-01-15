@@ -7,7 +7,6 @@ public class DateBasedPartitioningOutputFormat extends MultipleTextOutputFormat<
 
     @Override
     protected String generateFileNameForKeyValue(Text key, Text value, String name) {
-        System.out.println("Key: " + key);
         String date = key.toString();
         String[] fields = date.split("-");
         return String.format("%s/%s/%s", fields[0], fields[1], name);
