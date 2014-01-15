@@ -1,4 +1,4 @@
-package com.thoughtworks.samples.hadoop.mapred.merge;
+package com.thoughtworks.samples.hadoop.mapred.generic;
 
 import org.apache.hadoop.mapreduce.Mapper;
 

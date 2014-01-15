@@ -1,5 +1,7 @@
 package com.thoughtworks.samples.hadoop.mapred.merge;
 
+import com.thoughtworks.samples.hadoop.mapred.generic.IdentityMapper;
+import com.thoughtworks.samples.hadoop.mapred.generic.IdentityReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
