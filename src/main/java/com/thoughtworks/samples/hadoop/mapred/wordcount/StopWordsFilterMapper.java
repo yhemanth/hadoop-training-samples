@@ -45,6 +45,8 @@ public class StopWordsFilterMapper extends Mapper<Object, Text, Text, IntWritabl
         for (String word : words) {
             if (!stopWords.contains(word.toLowerCase())) {
                 context.write(new Text(word), new IntWritable(1));
+            } else {
+                context.getCounter(SKIPPED_WORDS.STOP_WORDS).increment(1);
             }
         }
     }
