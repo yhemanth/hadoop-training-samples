@@ -16,13 +16,13 @@ import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
 
-public class ColorCountJob extends Configured implements Tool {
+public class GenericColorCountJob extends Configured implements Tool {
+
   @Override
   public int run(String[] args) throws Exception {
 
-    Configuration conf = getConf();
-    Job job = new Job(conf, "color count");
-    job.setJarByClass(ColorCountJob.class);
+    Job job = new Job(getConf(), "generic-color-count-using-avro");
+    job.setJarByClass(GenericColorCountJob.class);
 
     configureMapper(job, args);
     configureReducer(job, args);
@@ -39,7 +39,7 @@ public class ColorCountJob extends Configured implements Tool {
   }
 
   private void configureMapper(Job job, String[] args) throws IOException {
-    job.setMapperClass(ColorCountMapper.class);
+    job.setMapperClass(GenericColorCountMapper.class);
     job.setInputFormatClass(AvroKeyInputFormat.class);
     AvroKeyInputFormat.setInputPaths(job, args[0]);
     job.setMapOutputKeyClass(Text.class);
@@ -47,6 +47,6 @@ public class ColorCountJob extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    ToolRunner.run(new Configuration(), new ColorCountJob(), args);
+    ToolRunner.run(new Configuration(), new GenericColorCountJob(), args);
   }
 }

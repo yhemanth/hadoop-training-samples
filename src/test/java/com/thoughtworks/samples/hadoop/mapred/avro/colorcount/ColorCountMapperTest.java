@@ -5,7 +5,6 @@ import org.apache.avro.mapred.AvroKey;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.junit.Test;
 
@@ -18,12 +17,9 @@ public class ColorCountMapperTest {
 
     User user = new User("Hemanth", new Integer(0), "RED");
     AvroKey<User> userAvroKey = new AvroKey<User>(user);
-    Job job = AvroJobInitializer.setupAvroSerialization();
-    job.getConfiguration().setStrings("avro.serialization.key.writer.schema", user.getSchema().toString(true));
 
-    ColorCountMapper colorCountMapper = new ColorCountMapper();
     MapDriver<AvroKey<User>,NullWritable,Text,IntWritable> mapDriver
-      = MapDriver.newMapDriver(colorCountMapper).withConfiguration(job.getConfiguration());
+      = MapDriver.newMapDriver(new ColorCountMapper());
     mapDriver.withInput(userAvroKey, NullWritable.get());
     mapDriver.withOutput(new Text("RED"), new IntWritable(1));
 
