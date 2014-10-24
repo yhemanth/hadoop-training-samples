@@ -23,6 +23,8 @@ public class CustomFormatClient {
 		}*/
 		
 		Configuration conf = new Configuration();
+
+         
 		Job job = new Job(conf,"Custom Input Type");
 		job.setJarByClass(CustomFormatClient.class);
 		job.setNumReduceTasks(0);
