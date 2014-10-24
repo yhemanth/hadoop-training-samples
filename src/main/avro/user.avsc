@@ -1,5 +1,5 @@
 {
-    "namespace": "com.thoughtworks.samples.hadoop.avro",
+    "namespace": "com.dsinpractice.samples.hadoop.avro",
     "type": "record",
     "name": "User",
     "fields": [
