@@ -17,14 +17,14 @@ public class CustomFormatClient {
 	
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 		
-		/*if (args.length != 2) {
+		/*if (args-Djava.security.krb5.realm=OX.AC.UK -Djava.security.krb5.kdc=kdc0.ox.ac.uk:kdc1.ox.ac.uk.length != 2) {
 		      System.err.println("Usage: <input path> <output path>");
 		      System.exit(-1);
 		}*/
 		
 		Configuration conf = new Configuration();
 
-         
+
 		Job job = new Job(conf,"Custom Input Type");
 		job.setJarByClass(CustomFormatClient.class);
 		job.setNumReduceTasks(0);
